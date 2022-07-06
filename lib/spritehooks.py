@@ -8,9 +8,8 @@ if not __name__ == "__main__":
     import pygame,asyncio
     import collections
     pygame.init()
-    ALL_SPRITES_TO_DRAW = [None]
     class Sprite:
-        def __init__(self, _name:str, _posx:int, _posy:int,_costumelist:list,_spritefunc,_clonedata=None):
+        def __init__(self, _name:str, _posx:int, _posy:int,_costumelist:list,_spritefunc,_clonedata=None,_usesevents=False,_eventfunc=None):
             if not _clonedata:
                 self.isclone=False
                 self.clonecount = 0
@@ -20,6 +19,7 @@ if not __name__ == "__main__":
                 self.costumelist = _costumelist
                 self.currentcostume = self.costumelist[0]
                 self.spritefunc = _spritefunc
+                self.eventfunc = _eventfunc
                 self.exports = [
                     [
                         self.name,
@@ -58,17 +58,20 @@ if not __name__ == "__main__":
                         pygame.image.load(self.currentcostume),
                         self.cloneid,
                         self.clonecount,
+                        self.currentcostume,
+                        self.costumelist,
                         self.spritefunc
                     ]
                 ]
         def get_object(self): return self.exports
-        def change_costume(costume:str,self):
-            self.currentcostume = self.costumelist[self.costumelist.index(costume)]
-            return self
-        #register a clone as a new sprite using the same name and increase the clonecount
-        def register_Clone(self,spritelist):
-            self.clonecount = self.clonecount + 1
-            clone = Sprite(self.name,self.pos[0],self.pos[1],self.costumelist,self.spritefunc,(self.clonecount,self.clonecount,self.currentcostume))
+        def change_costume(t1,costume:str,costumelist:list):
+            print(type(costume))
+            t1.exports[1][5] = costumelist[costumelist.index(costume)]
+            return t1
+        def register_Clone(t1,spritelist):
+            t1.exports[1][4] = t1.clonecount + 1
+            t1.clonecount = t1.clonecount + 1
+            clone = Sprite(t1.name,t1.pos[0]+128,t1.pos[1],t1.costumelist,t1.spritefunc,(t1.clonecount,t1.clonecount,t1.costumelist[1]))
             spritelist.append(clone.get_object())
             return spritelist
         
