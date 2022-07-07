@@ -29,7 +29,8 @@ if not __name__ == "__main__":
                         self.currentcostume,
                         self.costumelist,
                         self.spritefunc,
-                        self.isclone
+                        self.isclone,
+                        self
                     ]
                 ]
             elif _clonedata:
@@ -51,11 +52,13 @@ if not __name__ == "__main__":
                         self.currentcostume,
                         self.costumelist,
                         self.spritefunc,
-                        self.isclone
+                        self.isclone,
+                        self
                     ]
                 ]
         def get_object(self): return self.exports
         def change_costume(t1,costume:str,costumelist:list):
+            t1.exports[0][2] = pygame.image.load(costumelist[costumelist.index(costume)])
             t1.exports[0][5] = costumelist[costumelist.index(costume)]
             return t1
         def register_Clone(t1,spritelist):

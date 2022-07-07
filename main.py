@@ -27,7 +27,7 @@ while running:
     screen.fill((255,255,255))
     clonecount = 0
     for sprite in sprites:
-        name, pos, img, cloneid,clonecount,currentcostume,costumelist, func, isclone = sprite[0]
+        name, pos, img, cloneid,clonecount,currentcostume,costumelist, func, isclone,obj = sprite[0]
         func(sprite)
         img = pygame.transform.scale(img,((WIDTH-img.get_width())/RESIZE,(HEIGHT-img.get_height())/RESIZE))
         screen.blit(img,(pos[0]+img.get_width()*cloneid,pos[1]))
